@@ -44,7 +44,15 @@ export default function About() {
             </div>
             <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-8 border border-purple-100">
               <div className="text-center">
-                <div className="text-6xl mb-4">🎲</div>
+                <div className="flex justify-center mb-4">
+                  <Image
+                    src="/logo.jpg"
+                    alt="Dice & Fork Logo"
+                    width={80}
+                    height={80}
+                    className="rounded-xl shadow-md"
+                  />
+                </div>
                 <h3 className="text-2xl font-bold mb-4 text-gray-900">Founded in 2018</h3>
                 <p className="text-lg text-gray-700">
                   From a small group of friends to a thriving community of board game enthusiasts.
