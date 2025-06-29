@@ -1,9 +1,20 @@
+import Image from 'next/image';
+
 export default function About() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-purple-600 to-blue-600 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center mb-8">
+            <Image
+              src="/logo.jpg"
+              alt="Dice & Fork Logo"
+              width={100}
+              height={100}
+              className="rounded-2xl shadow-lg"
+            />
+          </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6">About Dice & Fork</h1>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto">
             Building a community where strategy, friendship, and fun come together through the love of board games.
