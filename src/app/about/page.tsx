@@ -42,11 +42,11 @@ export default function About() {
                 and maintain an extensive library of games for our members to enjoy.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-purple-400 to-blue-500 rounded-2xl p-8 text-white">
+            <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-8 border border-purple-100">
               <div className="text-center">
                 <div className="text-6xl mb-4">🎲</div>
-                <h3 className="text-2xl font-bold mb-4">Founded in 2018</h3>
-                <p className="text-lg opacity-90">
+                <h3 className="text-2xl font-bold mb-4 text-gray-900">Founded in 2018</h3>
+                <p className="text-lg text-gray-700">
                   From a small group of friends to a thriving community of board game enthusiasts.
                 </p>
               </div>
@@ -177,9 +177,9 @@ export default function About() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white rounded-xl p-8 text-center shadow-lg">
-              <div className="w-24 h-24 bg-gradient-to-r from-purple-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl font-bold">AJ</span>
+            <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-gray-100">
+              <div className="w-24 h-24 bg-gradient-to-r from-purple-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-purple-200">
+                <span className="text-purple-600 text-2xl font-bold">AJ</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">Alex Johnson</h3>
               <p className="text-purple-600 font-medium mb-3">Founder & President</p>
@@ -189,9 +189,9 @@ export default function About() {
               </p>
             </div>
 
-            <div className="bg-white rounded-xl p-8 text-center shadow-lg">
-              <div className="w-24 h-24 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl font-bold">MC</span>
+            <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-gray-100">
+              <div className="w-24 h-24 bg-gradient-to-r from-green-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-green-200">
+                <span className="text-green-600 text-2xl font-bold">MC</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">Maria Chen</h3>
               <p className="text-purple-600 font-medium mb-3">Events Coordinator</p>
@@ -201,9 +201,9 @@ export default function About() {
               </p>
             </div>
 
-            <div className="bg-white rounded-xl p-8 text-center shadow-lg">
-              <div className="w-24 h-24 bg-gradient-to-r from-yellow-400 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl font-bold">DS</span>
+            <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-gray-100">
+              <div className="w-24 h-24 bg-gradient-to-r from-yellow-100 to-red-100 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-yellow-200">
+                <span className="text-yellow-600 text-2xl font-bold">DS</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">David Smith</h3>
               <p className="text-purple-600 font-medium mb-3">Game Librarian</p>

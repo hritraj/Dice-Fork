@@ -29,7 +29,7 @@ export default function TestimonialCard({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+    <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-gray-100">
       {/* Quote Icon */}
       <div className="mb-4">
         <svg className="w-8 h-8 text-purple-200" fill="currentColor" viewBox="0 0 24 24">
@@ -43,13 +43,13 @@ export default function TestimonialCard({
       </div>
 
       {/* Content */}
-      <p className="text-gray-600 mb-6 leading-relaxed">
+      <p className="text-gray-700 mb-6 leading-relaxed text-sm">
         "{content}"
       </p>
 
       {/* Author */}
       <div className="flex items-center">
-        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center mr-4">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center mr-4 shadow-sm">
           {avatarUrl ? (
             <img 
               src={avatarUrl} 
