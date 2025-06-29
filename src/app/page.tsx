@@ -7,6 +7,7 @@ import TestimonialCard from '@/components/TestimonialCard';
 // Dummy data for events
 const upcomingEvents = [
   {
+    id: "event-1",
     title: "Secret Hitler Tournament",
     date: "June 15, 2024",
     time: "7:00 PM",
@@ -17,22 +18,26 @@ const upcomingEvents = [
     isFeatured: true
   },
   {
+    id: "event-2",
     title: "Catan Championship",
     date: "June 22, 2024",
     time: "6:30 PM",
     location: "Community Center",
     description: "Build, trade, and settle your way to victory in our monthly Catan tournament.",
     attendees: 12,
-    maxAttendees: 16
+    maxAttendees: 16,
+    isFeatured: false
   },
   {
+    id: "event-3",
     title: "Newbie Night",
     date: "June 29, 2024",
     time: "7:00 PM",
     location: "Board Game Lounge",
     description: "Perfect for beginners! Learn new games in a friendly, supportive environment.",
     attendees: 8,
-    maxAttendees: 15
+    maxAttendees: 15,
+    isFeatured: false
   }
 ];
 
@@ -69,19 +74,19 @@ const testimonials = [
   {
     name: "Sarah Johnson",
     role: "Regular Member",
-    content: "Dice & Fork has completely changed my social life. I've made amazing friends and discovered so many incredible games. The community is welcoming and the events are always well-organized.",
+    content: "Dice & Fork has completely changed my social life. I&apos;ve made amazing friends and discovered so many incredible games. The community is welcoming and the events are always well-organized.",
     rating: 5
   },
   {
     name: "Mike Chen",
     role: "Board Game Enthusiast",
-    content: "As someone who loves strategy games, this club is perfect. The tournaments are competitive but friendly, and I've learned so many new games from other members.",
+    content: "As someone who loves strategy games, this club is perfect. The tournaments are competitive but friendly, and I&apos;ve learned so many new games from other members.",
     rating: 5
   },
   {
     name: "Emma Rodriguez",
     role: "New Member",
-    content: "I was nervous about joining as a beginner, but everyone was so helpful and patient. Now I can't imagine my weekends without our game nights!",
+    content: "I was nervous about joining as a beginner, but everyone was so helpful and patient. Now I can&apos;t imagine my weekends without our game nights!",
     rating: 5
   }
 ];
@@ -131,7 +136,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">About Our Club</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We're a passionate community of board game lovers who believe that the best games 
+              We&apos;re a passionate community of board game lovers who believe that the best games 
               are played with friends, laughter, and maybe a little friendly competition.
             </p>
           </div>
@@ -183,7 +188,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Upcoming Events</h2>
-            <p className="text-xl text-gray-600">Don't miss out on our exciting upcoming events and tournaments!</p>
+            <p className="text-xl text-gray-600">Don&apos;t miss out on our exciting upcoming events and tournaments!</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {upcomingEvents.map((event, index) => (

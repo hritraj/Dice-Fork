@@ -22,9 +22,17 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error) {
-    console.error('Error in GET /api/events/register:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ 
+        error: 'Internal server error', 
+        details: error.message 
+      }, { status: 500 });
+    }
+    return NextResponse.json({ 
+      error: 'Internal server error', 
+      details: 'Unknown error' 
+    }, { status: 500 });
   }
 }
 
@@ -115,11 +123,16 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(registration, { status: 201 });
-  } catch (error: any) {
-    console.error('Error in POST /api/events/register:', error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ 
+        error: 'Internal server error', 
+        details: error.message 
+      }, { status: 500 });
+    }
     return NextResponse.json({ 
       error: 'Internal server error', 
-      details: error.message 
+      details: 'Unknown error' 
     }, { status: 500 });
   }
 }
@@ -166,8 +179,16 @@ export async function DELETE(request: NextRequest) {
     }
 
     return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error in DELETE /api/events/register:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ 
+        error: 'Internal server error', 
+        details: error.message 
+      }, { status: 500 });
+    }
+    return NextResponse.json({ 
+      error: 'Internal server error', 
+      details: 'Unknown error' 
+    }, { status: 500 });
   }
 } 

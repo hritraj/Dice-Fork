@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface GameCardProps {
   title: string;
   description: string;
@@ -35,10 +37,12 @@ export default function GameCard({
       {/* Game Image */}
       <div className="h-48 bg-gradient-to-br from-purple-50 to-blue-50 relative overflow-hidden border-b border-gray-100">
         {imageUrl ? (
-          <img 
+          <Image 
             src={imageUrl} 
             alt={title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            width={192}
+            height={192}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">

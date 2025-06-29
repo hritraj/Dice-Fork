@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/components/AuthProvider';
 import EventCard from '@/components/EventCard';
 
@@ -28,60 +28,49 @@ export default function Events() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  // Fetch events from database
-  const fetchEvents = async () => {
+  const fetchEvents = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    
     try {
-      setLoading(true);
-      const params = new URLSearchParams();
-      if (selectedCategory !== "All") {
-        params.append('category', selectedCategory);
+      const response = await fetch('/api/events');
+      if (response.ok) {
+        const data = await response.json();
+        setEvents(data);
+      } else {
+        setError('Failed to load events');
       }
-      if (searchTerm) {
-        params.append('search', searchTerm);
-      }
-
-      const response = await fetch(`/api/events?${params}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch events');
-      }
-
-      const data = await response.json();
-      setEvents(data);
-    } catch (error: any) {
-      setError(error.message);
+    } catch {
+      setError('Error loading events');
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  // Fetch user registrations
-  const fetchUserRegistrations = async () => {
-    if (!user) {
-      setUserRegistrations([]);
-      return;
-    }
-
+  const fetchUserRegistrations = useCallback(async () => {
+    if (!user) return;
+    
     try {
       const response = await fetch(`/api/events/register?userId=${user.id}`);
       if (response.ok) {
         const data = await response.json();
-        setUserRegistrations(data.map((reg: any) => reg.event_id));
+        setUserRegistrations(data.map((reg: unknown) => (reg as { event_id: string }).event_id));
       }
     } catch (error) {
       console.error('Error fetching user registrations:', error);
     }
-  };
+  }, [user]);
 
   // Load events and registrations on mount and when filters change
   useEffect(() => {
     fetchEvents();
-  }, [selectedCategory, searchTerm]);
+  }, [selectedCategory, searchTerm, fetchEvents]);
 
   useEffect(() => {
     fetchUserRegistrations();
-  }, [user]);
+  }, [fetchUserRegistrations]);
 
   const handleRegistrationChange = () => {
     // Refresh both events and user registrations
@@ -269,9 +258,9 @@ export default function Events() {
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-r from-purple-600 to-blue-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-4">Can't Find What You're Looking For?</h2>
+          <h2 className="text-4xl font-bold mb-4">Can&apos;t Find What You&apos;re Looking For?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            We're always open to suggestions for new events and game types. Let us know what you'd like to see!
+            We&apos;re always open to suggestions for new events and game types. Let us know what you&apos;d like to see!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 

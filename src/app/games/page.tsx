@@ -238,7 +238,7 @@ export default function Games() {
               </div>
               <h3 className="text-xl font-semibold mb-3">Social Deduction</h3>
               <p className="text-gray-600">
-                Games focused on deception, bluffing, and reading other players' intentions.
+                Games focused on deception, bluffing, and reading other players&apos; intentions.
               </p>
             </div>
 

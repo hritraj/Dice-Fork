@@ -104,7 +104,7 @@ export default function Contact() {
           </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6">Contact Us</h1>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto">
-            Have questions, suggestions, or want to join our community? We'd love to hear from you!
+            Have questions, suggestions, or want to join our community? We&apos;d love to hear from you!
           </p>
         </div>
       </section>
@@ -120,7 +120,7 @@ export default function Contact() {
               {submitStatus === 'success' && (
                 <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
                   <p className="font-medium">Thank you for your message!</p>
-                  <p className="text-sm">We'll get back to you as soon as possible.</p>
+                  <p className="text-sm">We&apos;ll get back to you as soon as possible.</p>
                 </div>
               )}
 

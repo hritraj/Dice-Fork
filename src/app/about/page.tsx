@@ -69,7 +69,7 @@ export default function About() {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Mission & Values</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We're driven by a simple mission: to create an inclusive, welcoming community where 
+              We&apos;re driven by a simple mission: to create an inclusive, welcoming community where 
               everyone can discover the joy of board games, regardless of their experience level.
             </p>
           </div>
@@ -107,7 +107,7 @@ export default function About() {
               </div>
               <h3 className="text-xl font-semibold mb-3">Innovation</h3>
               <p className="text-gray-600">
-                We're always exploring new games, formats, and ways to make our events more engaging and fun.
+                We&apos;re always exploring new games, formats, and ways to make our events more engaging and fun.
               </p>
             </div>
 
@@ -119,7 +119,7 @@ export default function About() {
               </div>
               <h3 className="text-xl font-semibold mb-3">Education</h3>
               <p className="text-gray-600">
-                We're committed to teaching new games and helping players develop their strategic thinking skills.
+                We&apos;re committed to teaching new games and helping players develop their strategic thinking skills.
               </p>
             </div>
 
@@ -229,7 +229,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-4">Join Our Community</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Ready to become part of the Dice & Fork family? We'd love to welcome you to our next event!
+            Ready to become part of the Dice & Fork family? We&apos;d love to welcome you to our next event!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 

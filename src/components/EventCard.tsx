@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from './AuthProvider';
+import Image from 'next/image';
 
 interface EventCardProps {
   id: string;
@@ -72,8 +73,12 @@ export default function EventCard({
       if (onRegistrationChange) {
         onRegistrationChange();
       }
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     } finally {
       setLoading(false);
     }
@@ -100,8 +105,12 @@ export default function EventCard({
       if (onRegistrationChange) {
         onRegistrationChange();
       }
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     } finally {
       setLoading(false);
     }
@@ -112,10 +121,12 @@ export default function EventCard({
       {/* Event Image */}
       <div className="h-48 bg-gradient-to-br from-purple-50 to-blue-50 relative overflow-hidden border-b border-gray-100">
         {imageUrl ? (
-          <img 
+          <Image 
             src={imageUrl} 
             alt={title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            width={1920}
+            height={1080}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">

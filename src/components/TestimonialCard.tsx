@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface TestimonialCardProps {
   name: string;
   role: string;
@@ -44,16 +46,18 @@ export default function TestimonialCard({
 
       {/* Content */}
       <p className="text-gray-700 mb-6 leading-relaxed text-sm">
-        "{content}"
+        &quot;{content}&quot;
       </p>
 
       {/* Author */}
       <div className="flex items-center">
         <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center mr-4 shadow-sm">
           {avatarUrl ? (
-            <img 
+            <Image 
               src={avatarUrl} 
               alt={name}
+              width={48}
+              height={48}
               className="w-12 h-12 rounded-full object-cover"
             />
           ) : (

@@ -21,7 +21,7 @@ export default function JoinUsPage() {
     try {
       if (isLogin) {
         // Login
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
@@ -36,7 +36,7 @@ export default function JoinUsPage() {
         }, 1500);
       } else {
         // Sign up
-        const { data, error } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -55,8 +55,12 @@ export default function JoinUsPage() {
         setPassword('');
         setName('');
       }
-    } catch (error: any) {
-      setMessage(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setMessage(error.message);
+      } else {
+        setMessage('An unknown error occurred.');
+      }
       setMessageType('error');
     } finally {
       setLoading(false);
@@ -65,7 +69,7 @@ export default function JoinUsPage() {
 
   const handleGoogleAuth = async () => {
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/`,
@@ -73,8 +77,12 @@ export default function JoinUsPage() {
       });
 
       if (error) throw error;
-    } catch (error: any) {
-      setMessage(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setMessage(error.message);
+      } else {
+        setMessage('An unknown error occurred.');
+      }
       setMessageType('error');
     }
   };
