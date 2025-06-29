@@ -1,100 +1,95 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '@/components/AuthProvider';
 import EventCard from '@/components/EventCard';
 
-// Extended dummy data for events
-const allEvents = [
-  {
-    title: "Secret Hitler Tournament",
-    date: "June 15, 2024",
-    time: "7:00 PM",
-    location: "Game Haven Cafe",
-    description: "Join us for an intense evening of deception and strategy. Can you identify the fascists among you?",
-    attendees: 18,
-    maxAttendees: 20,
-    isFeatured: true,
-    category: "Tournament"
-  },
-  {
-    title: "Catan Championship",
-    date: "June 22, 2024",
-    time: "6:30 PM",
-    location: "Community Center",
-    description: "Build, trade, and settle your way to victory in our monthly Catan tournament.",
-    attendees: 12,
-    maxAttendees: 16,
-    category: "Tournament"
-  },
-  {
-    title: "Newbie Night",
-    date: "June 29, 2024",
-    time: "7:00 PM",
-    location: "Board Game Lounge",
-    description: "Perfect for beginners! Learn new games in a friendly, supportive environment.",
-    attendees: 8,
-    maxAttendees: 15,
-    category: "Social"
-  },
-  {
-    title: "Strategy Game Night",
-    date: "July 6, 2024",
-    time: "6:00 PM",
-    location: "Game Haven Cafe",
-    description: "Focus on complex strategy games like Terraforming Mars, Scythe, and Twilight Imperium.",
-    attendees: 6,
-    maxAttendees: 12,
-    category: "Strategy"
-  },
-  {
-    title: "Family Game Day",
-    date: "July 13, 2024",
-    time: "2:00 PM",
-    location: "Community Center",
-    description: "All-ages event featuring family-friendly games perfect for parents and children.",
-    attendees: 25,
-    maxAttendees: 30,
-    category: "Family"
-  },
-  {
-    title: "Social Deduction Marathon",
-    date: "July 20, 2024",
-    time: "5:00 PM",
-    location: "Board Game Lounge",
-    description: "A full evening of deception games including Werewolf, Mafia, and One Night Ultimate Werewolf.",
-    attendees: 14,
-    maxAttendees: 18,
-    category: "Social"
-  },
-  {
-    title: "Euro Game Evening",
-    date: "July 27, 2024",
-    time: "6:30 PM",
-    location: "Game Haven Cafe",
-    description: "Classic European-style board games like Carcassonne, Ticket to Ride, and Agricola.",
-    attendees: 10,
-    maxAttendees: 16,
-    category: "Strategy"
-  },
-  {
-    title: "Cooperative Game Night",
-    date: "August 3, 2024",
-    time: "7:00 PM",
-    location: "Community Center",
-    description: "Work together to overcome challenges in games like Pandemic, Forbidden Island, and Spirit Island.",
-    attendees: 9,
-    maxAttendees: 12,
-    category: "Cooperative"
-  }
-];
+interface Event {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  location: string;
+  description: string;
+  attendees: number;
+  maxAttendees: number;
+  imageUrl?: string;
+  isFeatured?: boolean;
+  category: string;
+  created_at: string;
+}
 
 const categories = ["All", "Tournament", "Social", "Strategy", "Family", "Cooperative"];
 
 export default function Events() {
+  const { user } = useAuth();
+  const [events, setEvents] = useState<Event[]>([]);
+  const [userRegistrations, setUserRegistrations] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const filteredEvents = allEvents.filter(event => {
+  // Fetch events from database
+  const fetchEvents = async () => {
+    try {
+      setLoading(true);
+      const params = new URLSearchParams();
+      if (selectedCategory !== "All") {
+        params.append('category', selectedCategory);
+      }
+      if (searchTerm) {
+        params.append('search', searchTerm);
+      }
+
+      const response = await fetch(`/api/events?${params}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch events');
+      }
+
+      const data = await response.json();
+      setEvents(data);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch user registrations
+  const fetchUserRegistrations = async () => {
+    if (!user) {
+      setUserRegistrations([]);
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/events/register?userId=${user.id}`);
+      if (response.ok) {
+        const data = await response.json();
+        setUserRegistrations(data.map((reg: any) => reg.event_id));
+      }
+    } catch (error) {
+      console.error('Error fetching user registrations:', error);
+    }
+  };
+
+  // Load events and registrations on mount and when filters change
+  useEffect(() => {
+    fetchEvents();
+  }, [selectedCategory, searchTerm]);
+
+  useEffect(() => {
+    fetchUserRegistrations();
+  }, [user]);
+
+  const handleRegistrationChange = () => {
+    // Refresh both events and user registrations
+    fetchEvents();
+    fetchUserRegistrations();
+  };
+
+  const filteredEvents = events.filter(event => {
     const matchesCategory = selectedCategory === "All" || event.category === selectedCategory;
     const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          event.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -154,7 +149,18 @@ export default function Events() {
       {/* Events Grid */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredEvents.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading events...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <div className="text-6xl mb-4">⚠️</div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-2">Error loading events</h3>
+              <p className="text-gray-600">{error}</p>
+            </div>
+          ) : filteredEvents.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🎲</div>
               <h3 className="text-2xl font-semibold text-gray-900 mb-2">No events found</h3>
@@ -172,8 +178,13 @@ export default function Events() {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredEvents.map((event, index) => (
-                  <EventCard key={index} {...event} />
+                {filteredEvents.map((event) => (
+                  <EventCard 
+                    key={event.id} 
+                    {...event}
+                    isRegistered={userRegistrations.includes(event.id)}
+                    onRegistrationChange={handleRegistrationChange}
+                  />
                 ))}
               </div>
             </>

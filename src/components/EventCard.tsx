@@ -1,4 +1,10 @@
+'use client';
+
+import { useState } from 'react';
+import { useAuth } from './AuthProvider';
+
 interface EventCardProps {
+  id: string;
   title: string;
   date: string;
   time: string;
@@ -8,9 +14,13 @@ interface EventCardProps {
   maxAttendees: number;
   imageUrl?: string;
   isFeatured?: boolean;
+  category?: string;
+  isRegistered?: boolean;
+  onRegistrationChange?: () => void;
 }
 
 export default function EventCard({ 
+  id,
   title, 
   date, 
   time, 
@@ -19,10 +29,83 @@ export default function EventCard({
   attendees, 
   maxAttendees,
   imageUrl,
-  isFeatured = false
+  isFeatured = false,
+  category,
+  isRegistered = false,
+  onRegistrationChange
 }: EventCardProps) {
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  
   const attendancePercentage = (attendees / maxAttendees) * 100;
   const isFull = attendees >= maxAttendees;
+
+  const handleRegistration = async () => {
+    if (!user) {
+      setError('Please log in to register for events');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('/api/events/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          eventId: id,
+          userId: user.id,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to register for event');
+      }
+
+      // Call the callback to refresh the events list
+      if (onRegistrationChange) {
+        onRegistrationChange();
+      }
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUnregistration = async () => {
+    if (!user) return;
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch(`/api/events/register?eventId=${id}&userId=${user.id}`, {
+        method: 'DELETE',
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to unregister from event');
+      }
+
+      // Call the callback to refresh the events list
+      if (onRegistrationChange) {
+        onRegistrationChange();
+      }
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={`bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100 ${isFeatured ? 'ring-2 ring-purple-500' : ''}`}>
@@ -55,6 +138,13 @@ export default function EventCard({
             {isFull ? 'Full' : `${attendees}/${maxAttendees}`}
           </span>
         </div>
+        {category && (
+          <div className="absolute bottom-3 left-3">
+            <span className="px-2 py-1 bg-gray-800 text-white text-xs font-medium rounded-full shadow-sm">
+              {category}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Event Info */}
@@ -106,17 +196,35 @@ export default function EventCard({
           </div>
         </div>
 
+        {/* Error Message */}
+        {error && (
+          <div className="mb-4 p-2 bg-red-50 text-red-600 text-sm rounded-md">
+            {error}
+          </div>
+        )}
+
         {/* Action Button */}
-        <button 
-          className={`w-full py-2 px-4 rounded-lg font-medium transition-all duration-200 ${
-            isFull 
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-              : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 shadow-sm'
-          }`}
-          disabled={isFull}
-        >
-          {isFull ? 'Event Full' : 'Join Event'}
-        </button>
+        {isRegistered ? (
+          <button 
+            onClick={handleUnregistration}
+            disabled={loading}
+            className="w-full py-2 px-4 rounded-lg font-medium transition-all duration-200 bg-red-600 text-white hover:bg-red-700 shadow-sm disabled:opacity-50"
+          >
+            {loading ? 'Unregistering...' : 'Unregister'}
+          </button>
+        ) : (
+          <button 
+            onClick={handleRegistration}
+            disabled={isFull || loading}
+            className={`w-full py-2 px-4 rounded-lg font-medium transition-all duration-200 ${
+              isFull 
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+                : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 shadow-sm'
+            } disabled:opacity-50`}
+          >
+            {loading ? 'Registering...' : (isFull ? 'Event Full' : 'Join Event')}
+          </button>
+        )}
       </div>
     </div>
   );

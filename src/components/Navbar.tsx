@@ -3,12 +3,19 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useAuth } from './AuthProvider';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, signOut, loading } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    setIsMenuOpen(false);
   };
 
   return (
@@ -46,12 +53,28 @@ export default function Navbar() {
             <Link href="/contact" className="text-gray-700 hover:text-purple-600 transition-colors">
               Contact
             </Link>
-            <Link 
-              href="/join" 
-              className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
-            >
-              Join Us
-            </Link>
+            {!loading && (
+              user ? (
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm text-gray-600">
+                    Welcome, {user.user_metadata?.name || user.email}
+                  </span>
+                  <button
+                    onClick={handleSignOut}
+                    className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all duration-200"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              ) : (
+                <Link 
+                  href="/join" 
+                  className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
+                >
+                  Join Us
+                </Link>
+              )
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -110,13 +133,29 @@ export default function Navbar() {
               >
                 Contact
               </Link>
-              <Link 
-                href="/join" 
-                className="block px-3 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg mx-3 mt-2 text-center"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Join Us
-              </Link>
+              {!loading && (
+                user ? (
+                  <div className="px-3 py-2">
+                    <div className="text-sm text-gray-600 mb-2">
+                      Welcome, {user.user_metadata?.name || user.email}
+                    </div>
+                    <button
+                      onClick={handleSignOut}
+                      className="w-full bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all duration-200"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                ) : (
+                  <Link 
+                    href="/join" 
+                    className="block px-3 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg mx-3 mt-2 text-center"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Join Us
+                  </Link>
+                )
+              )}
             </div>
           </div>
         )}
