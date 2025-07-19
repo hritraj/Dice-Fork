@@ -1,9 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '../../../../lib/supabase';
 
 // GET - Fetch all events
 export async function GET(request: NextRequest) {
   try {
+    // Check if Supabase is configured
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      // Return mock data when Supabase is not configured
+      return NextResponse.json([]);
+    }
+
+    // Import Supabase only if configured
+    const { createClient } = await import('@supabase/supabase-js')
+    const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category');
     const search = searchParams.get('search');
@@ -40,6 +52,18 @@ export async function GET(request: NextRequest) {
 // POST - Create new event (admin only)
 export async function POST(request: NextRequest) {
   try {
+    // Check if Supabase is configured
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 503 });
+    }
+
+    // Import Supabase only if configured
+    const { createClient } = await import('@supabase/supabase-js')
+    const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
     const body = await request.json();
     const { title, date, time, location, description, maxAttendees, category, imageUrl } = body;
 

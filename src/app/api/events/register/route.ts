@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '../../../../../lib/supabase';
 
 // GET - Fetch user registrations
 export async function GET(request: NextRequest) {
@@ -10,6 +9,19 @@ export async function GET(request: NextRequest) {
     if (!userId) {
       return NextResponse.json({ error: 'Missing userId' }, { status: 400 });
     }
+
+    // Check if Supabase is configured
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      // Return empty array when Supabase is not configured
+      return NextResponse.json([]);
+    }
+
+    // Import Supabase only if configured
+    const { createClient } = await import('@supabase/supabase-js')
+    const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
     const { data, error } = await supabase
       .from('event_registrations')
@@ -45,6 +57,18 @@ export async function POST(request: NextRequest) {
     if (!eventId || !userId) {
       return NextResponse.json({ error: 'Missing eventId or userId' }, { status: 400 });
     }
+
+    // Check if Supabase is configured
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 503 });
+    }
+
+    // Import Supabase only if configured
+    const { createClient } = await import('@supabase/supabase-js')
+    const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
     // First, let's check if the event exists
     const { data: eventCheck, error: eventCheckError } = await supabase
@@ -147,6 +171,18 @@ export async function DELETE(request: NextRequest) {
     if (!eventId || !userId) {
       return NextResponse.json({ error: 'Missing eventId or userId' }, { status: 400 });
     }
+
+    // Check if Supabase is configured
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 503 });
+    }
+
+    // Import Supabase only if configured
+    const { createClient } = await import('@supabase/supabase-js')
+    const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
     // Delete registration
     const { error: deleteError } = await supabase
