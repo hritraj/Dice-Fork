@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fefefe;
+  --foreground: #1a1a1a;
+  --accent-warm: #d4860a;
+  --accent-cool: #2563eb;
+  --accent-brown: #8b4513;
+  --surface: #f8fafc;
+  --border: #e2e8f0;
+  --muted: #64748b;
 }
 
 @theme inline {
@@ -10,10 +16,208 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Custom color palette for Dice & Fork */
+  --color-cafe-brown: #8b4513;
+  --color-cafe-cream: #f5f0e8;
+  --color-game-blue: #2563eb;
+  --color-game-purple: #7c3aed;
+  --color-warm-orange: #f97316;
+  --color-forest-green: #059669;
+}
+
+/* Base styles */
+* {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth fade-in animation for page loads */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Parallax and scroll effects */
+.parallax {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Floating animation for decorative elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Gradient backgrounds */
+.bg-cafe-gradient {
+  background: linear-gradient(135deg, #8b4513 0%, #a0522d 50%, #cd853f 100%);
+}
+
+.bg-game-gradient {
+  background: linear-gradient(135deg, #7c3aed 0%, #2563eb 50%, #059669 100%);
+}
+
+.bg-warm-gradient {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%);
+}
+
+.bg-hero-pattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Button animations */
+.btn-primary {
+  @apply bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl font-semibold;
+  @apply hover:from-orange-600 hover:to-red-600 transition-all duration-300;
+  @apply shadow-lg hover:shadow-xl transform hover:-translate-y-1;
+}
+
+.btn-secondary {
+  @apply bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-xl font-semibold;
+  @apply hover:from-blue-600 hover:to-purple-600 transition-all duration-300;
+  @apply shadow-lg hover:shadow-xl transform hover:-translate-y-1;
+}
+
+.btn-outline {
+  @apply border-2 border-orange-500 text-orange-500 px-6 py-3 rounded-xl font-semibold;
+  @apply hover:bg-orange-500 hover:text-white transition-all duration-300;
+  @apply shadow-md hover:shadow-lg transform hover:-translate-y-1;
+}
+
+/* Text effects */
+.text-gradient {
+  background: linear-gradient(135deg, #f97316, #dc2626, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading states */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Intersection observer fade-ins */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.6s ease-out;
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Custom focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2;
+}
+
+/* Menu board style for café sections */
+.menu-board {
+  background: linear-gradient(145deg, #2d1810, #3d2318);
+  border: 3px solid #8b4513;
+  box-shadow: 
+    inset 0 2px 4px rgba(139, 69, 19, 0.3),
+    0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.chalk-text {
+  color: #f5f0e8;
+  text-shadow: 0 0 10px rgba(245, 240, 232, 0.5);
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive grid improvements */
+.grid-auto-fit {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-auto-fill {
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
 }

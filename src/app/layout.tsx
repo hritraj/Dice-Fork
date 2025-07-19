@@ -16,8 +16,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dice & Fork - Board Game Social Club",
-  description: "Join our vibrant community of board game enthusiasts. We organize regular meetups, tournaments, and social events where strategy meets fun.",
+  title: "Dice & Fork - Where Great Food Meets Great Games",
+  description: "A unique café experience where delicious food, artisan coffee, and board games come together. Enjoy our cozy atmosphere while playing your favorite games with friends.",
+  keywords: "café, board games, coffee, food, gaming café, social dining, tabletop games, restaurant",
+  authors: [{ name: "Dice & Fork" }],
+  openGraph: {
+    title: "Dice & Fork - Where Great Food Meets Great Games",
+    description: "A unique café experience where delicious food, artisan coffee, and board games come together.",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dice & Fork - Where Great Food Meets Great Games",
+    description: "A unique café experience where delicious food, artisan coffee, and board games come together.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
