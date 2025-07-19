@@ -95,19 +95,20 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-purple-600 via-blue-600 to-purple-800 text-white py-20">
+      <section className="bg-gradient-to-br from-primary via-secondary to-primary-dark text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center mb-8">
             <Image
-              src="/logo.jpg"
-              alt="Dice & Fork Logo"
+              src="/mascot.svg"
+              alt="Dice & Fork Mascot"
               width={120}
               height={120}
               className="rounded-2xl shadow-lg"
+              priority
             />
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Welcome to <span className="text-yellow-300">Dice & Fork</span>
+          <h1 className="text-5xl md:text-6xl font-headline font-bold mb-6 text-accent">
+            Welcome to <span className="text-accent">Dice & Fork</span>
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
             Where strategy meets fun! Join our vibrant community of board game enthusiasts 
@@ -116,13 +117,13 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               href="/join" 
-              className="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              className="bg-accent text-primary px-8 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors"
             >
               Join Our Club
             </Link>
             <Link 
               href="/events" 
-              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition-colors"
+              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors"
             >
               View Events
             </Link>
@@ -130,55 +131,67 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Preview Section */}
+      {/* How it Works Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl font-headline font-bold text-primary mb-8">How It Works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mb-4 text-3xl">🎲</div>
+              <h3 className="text-xl font-semibold mb-2">Join the Club</h3>
+              <p className="text-gray-600">Sign up online or at an event. All skill levels welcome!</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mb-4 text-3xl">🕹️</div>
+              <h3 className="text-xl font-semibold mb-2">Play & Connect</h3>
+              <p className="text-gray-600">Attend weekly meetups, tournaments, and casual game nights.</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-4 text-3xl">🏆</div>
+              <h3 className="text-xl font-semibold mb-2">Level Up</h3>
+              <p className="text-gray-600">Make friends, win prizes, and discover new games every month.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
       <section className="py-16 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-headline font-bold text-primary mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl shadow p-6">
+              <h3 className="font-semibold text-lg mb-2">How do I join Dice & Fork?</h3>
+              <p className="text-gray-600">Sign up online or come to an event. All are welcome!</p>
+            </div>
+            <div className="bg-white rounded-xl shadow p-6">
+              <h3 className="font-semibold text-lg mb-2">Do I need to bring my own games?</h3>
+              <p className="text-gray-600">Nope! We have a huge library of games for all interests and skill levels.</p>
+            </div>
+            <div className="bg-white rounded-xl shadow p-6">
+              <h3 className="font-semibold text-lg mb-2">Are there membership fees?</h3>
+              <p className="text-gray-600">Yes, $15/month or $150/year. Guests can attend for $5/event.</p>
+            </div>
+            <div className="bg-white rounded-xl shadow p-6">
+              <h3 className="font-semibold text-lg mb-2">Can I bring friends?</h3>
+              <p className="text-gray-600">Absolutely! Bring friends and family—just let us know in advance.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section (Carousel Scaffold) */}
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">About Our Club</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We&apos;re a passionate community of board game lovers who believe that the best games 
-              are played with friends, laughter, and maybe a little friendly competition.
-            </p>
+            <h2 className="text-4xl font-headline font-bold text-primary mb-4">What Our Members Say</h2>
+            <p className="text-xl text-gray-600">Hear from our community about their experiences with Dice & Fork.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Community First</h3>
-              <p className="text-gray-600">We prioritize building lasting friendships and creating a welcoming environment for all skill levels.</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Diverse Games</h3>
-              <p className="text-gray-600">From classic strategy games to modern social deduction, we have something for everyone.</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Regular Events</h3>
-              <p className="text-gray-600">Weekly meetups, monthly tournaments, and special events keep our community active and engaged.</p>
-            </div>
-          </div>
-          <div className="text-center mt-12">
-            <Link 
-              href="/about" 
-              className="inline-flex items-center text-purple-600 hover:text-purple-700 font-semibold"
-            >
-              Learn More About Us
-              <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
+          {/* TODO: Replace with carousel logic */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <TestimonialCard key={index} {...testimonial} />
+            ))}
           </div>
         </div>
       </section>
@@ -225,21 +238,6 @@ export default function Home() {
             >
               Browse All Games
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">What Our Members Say</h2>
-            <p className="text-xl text-gray-600">Hear from our community about their experiences with Dice & Fork.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard key={index} {...testimonial} />
-            ))}
           </div>
         </div>
       </section>

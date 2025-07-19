@@ -27,6 +27,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+        <meta property="og:title" content="Dice & Fork - Board Game Social Club" />
+        <meta property="og:description" content="Join our vibrant community of board game enthusiasts. We organize regular meetups, tournaments, and social events where strategy meets fun." />
+        <meta property="og:image" content="/og-image.png" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Dice & Fork - Board Game Social Club" />
+        <meta name="twitter:description" content="Join our vibrant community of board game enthusiasts. We organize regular meetups, tournaments, and social events where strategy meets fun." />
+        <meta name="twitter:image" content="/og-image.png" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
