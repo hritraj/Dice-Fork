@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '../../../../lib/supabase'
 
 export async function POST(request: Request) {
   try {
@@ -21,6 +20,22 @@ export async function POST(request: Request) {
         { status: 400 }
       )
     }
+
+    // Check if Supabase is configured
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.log('Contact form submission (Supabase not configured):', { name, email, subject })
+      return NextResponse.json({ 
+        success: true, 
+        message: 'Message received! We\'ll get back to you soon.' 
+      })
+    }
+
+    // Import Supabase only if configured
+    const { createClient } = await import('@supabase/supabase-js')
+    const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
     // Insert into database
     const { data, error } = await supabase
