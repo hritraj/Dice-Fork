@@ -16,8 +16,38 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dice & Fork - Board Game Social Club",
-  description: "Join our vibrant community of board game enthusiasts. We organize regular meetups, tournaments, and social events where strategy meets fun.",
+  title: "Dice & Fork - Café • Games • Community",
+  description: "Where amazing coffee meets epic board games. Join our warm, welcoming community for great food, incredible games, and unforgettable experiences in our social gaming hub.",
+  keywords: "board games, café, coffee, gaming, community, events, food, social, strategy games, family games",
+  authors: [{ name: "Dice & Fork" }],
+  creator: "Dice & Fork",
+  publisher: "Dice & Fork",
+  robots: "index, follow",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://diceandfork.com",
+    siteName: "Dice & Fork",
+    title: "Dice & Fork - Café • Games • Community",
+    description: "Where amazing coffee meets epic board games. Join our warm, welcoming community for great food, incredible games, and unforgettable experiences.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Dice & Fork - Board Game Café",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dice & Fork - Café • Games • Community",
+    description: "Where amazing coffee meets epic board games. Join our warm, welcoming community for great food, incredible games, and unforgettable experiences.",
+    images: ["/og-image.png"],
+    creator: "@diceandfork",
+  },
+  viewport: "width=device-width, initial-scale=1",
+  themeColor: "#8B4513",
 };
 
 export default function RootLayout({
@@ -26,18 +56,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="Dice & Fork - Board Game Social Club" />
-        <meta property="og:description" content="Join our vibrant community of board game enthusiasts. We organize regular meetups, tournaments, and social events where strategy meets fun." />
-        <meta property="og:image" content="/og-image.png" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Dice & Fork - Board Game Social Club" />
-        <meta name="twitter:description" content="Join our vibrant community of board game enthusiasts. We organize regular meetups, tournaments, and social events where strategy meets fun." />
-        <meta name="twitter:image" content="/og-image.png" />
-      </head>
+    <html lang="en" className="scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
